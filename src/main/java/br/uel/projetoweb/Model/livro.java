@@ -24,10 +24,9 @@ public class livro {
     private String titulo;
     @Column(nullable = false, length = 150)
     private String autor;
-    /*Em outra tabela?
     @Column
     private Integer edicao;
     @Column
-    private int ano;*/
+    private int ano;
 // Getters e setters
 }
