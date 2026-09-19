@@ -31,9 +31,10 @@ public class LivroService {
         if (livro !=  null){
             livro.setTitulo(livroAtualizado.getTitulo());
             livro.setAutor(livroAtualizado.getAutor());
-            livro.setISBN(livroAtualizado.getISBN());
+            livro.setIsbn(livroAtualizado.getIsbn());
             livro.setEdicao(livroAtualizado.getEdicao());
             livro.setAno(livroAtualizado.getAno());
+            livro.setExemplar(livroAtualizado.getExemplar());
             return livroRepository.save(livro);
         } else{
             throw new RuntimeException("Livro não encontrado por id: " + id);

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "livros")
+@Table(name = "Livros")
 
 public class Livro {
 
@@ -19,10 +19,10 @@ public class Livro {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(max = 150, message = "O ISBN deve ter no máximo 150 caracteres")
+    @Size(max = 13, message = "O ISBN deve ter no máximo 13 caracteres")
     @NotBlank(message = "ISBN é obrigatório")
-    @Column(unique = true, nullable = false, length = 150)
-    private String ISBN;
+    @Column(unique = true, nullable = false, length = 13)
+    private String isbn;
 
     @Size(max = 100, message = "O título deve ter no máximo 100 caracteres")
     @NotBlank(message = "O título é obrigatório")
@@ -39,5 +39,8 @@ public class Livro {
 
     @Column
     private int ano;
+
+    @Column
+    private int exemplar;
 // Getters e setters
 }

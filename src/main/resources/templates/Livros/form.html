@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>Livros - Formulário</title></head>
+<body>
+<h1 th:text="${livro.id} != null ? 'Editar Livro' : 'Novo Livro'"></h1>
+<!-- Formulário Novo Cliente (Parte 2) -->
+<!-- Formulário Editar Cliente (Parte 3) -->
+
+
+<form th:if="${livro.id == null}" th:action="@{/templates/Livros}"
+      method="post" th:object="${livro}">
+    <label for="isbn">ISBN:</label>
+    <input th:field="*{isbn}" type="text" required><br>
+    <label for="titulo">Titulo:</label>
+    <input th:field="*{titulo}"  type="text" required><br>
+    <label for="autor">Autor:</label>]
+    <input th:field="*{autor}"  type="text" required><br>
+    <label for="edicao">Edicao:</label>
+    <input th:field="*{edicao}" id="edicao" type="number"><br>
+    <label for="ano">Ano:</label>
+    <input th:field="*{ano}" id="ano" type="number"><br>
+    <label for="exemplar">Exemplar:</label>
+    <input th:field="*{exemplar}" id="exemplar" type="number"><br>
+
+    <!-- Erros por campo (mensagens do Bean Validation) -->
+    <div th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></div>
+    <div th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"></div>
+    <div th:if="${#fields.hasErrors('autor')}" th:errors="*{autor}"></div>
+    <button type="submit">Cadastrar</button>
+    <a th:href="@{/templates/Livros}">Cancelar</a>
+</form>
+<form th:if="${livro.id} != null"
+      th:action="@{/Livros/{id}(id=${livro.id})}" method="post"
+      th:object="${livro}">
+    <input type="hidden" th:field="*{id}" />
+
+    <input type="hidden" name="_method" value="put"/>
+    <label for="isbn">ISBN:</label>
+    <input th:field="*{isbn}" id="isbn" type="text" required><br>
+    <label for="titulo">Titulo:</label>
+    <input th:field="*{titulo}" id="titulo" type="text" required><br>
+    <label for="autor">Autor:</label>
+    <input th:field="*{autor}" id="autor" type="text"><br>
+
+    <!-- Erros por campo (mensagens do Bean Validation) -->
+    <div th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></div>
+    <div th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"></div>
+    <div th:if="${#fields.hasErrors('autor')}" th:errors="*{autor}"></div>
+    <button type="submit">Atualizar</button>
+    <a th:href="@{/templates/Livros}">Cancelar</a>
+</form>
+</body>
+</html>

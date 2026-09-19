@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>Livros − Lista</title></head>
+<body>
+<h1>LIVROS</h1>
+<!-- Mensagem de sucesso -->
+<p th:if="${msg}" th:text="${msg}"></p>
+<p><a th:href="@{/Livros/novo}">Novo Livro</a></p>
+<!-- Tabela (Parte 2) -->
+<table>
+    <tr>
+        <th>ISBN</th> <th>titulo</th> <th>autor</th> <th>edicao</th> <th>ano</th> <th>exemplar</th>
+    </tr>
+    <tr th:each="c : ${livros}">
+        <td th:text="${c.isbn}"></td>
+        <td th:text="${c.titulo}"></td>
+        <td th:text="${c.autor}"></td>
+        <td th:text="${c.edicao}"></td>
+        <td th:text="${c.ano}"></td>
+        <td th:text="${c.exemplar}"></td>
+        <td>
+            <form th:action="@{/Livros/editar/{id}(id=${c.id})}"
+                  method="get">
+                <button type="submit">Editar</button>
+            </form>
+            <form th:action="@{/Livros/{id}(id=${c.id})}" method="post">
+                <input type="hidden" name="_method" value="delete"/>
+                <button type="submit">Excluir</button>
+            </form>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
