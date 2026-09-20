@@ -54,7 +54,7 @@ public class LivroController {
             return "Livros/form";
         }
         service.cadastrarLivro(livro);
-        ra.addFlashAttribute("msg", "Cliente cadastrado!");
+        ra.addFlashAttribute("msg", "Livro cadastrado!");
         return "redirect:/Livros";
     }
 
@@ -72,14 +72,14 @@ public class LivroController {
             return "Livros/form";
         }
         service.atualizarLivro(id, livro);
-        ra.addFlashAttribute("msg", "Cliente atualizado!");
+        ra.addFlashAttribute("msg", "Livro atualizado!");
         return "redirect:/Livros";
     }
 
     @DeleteMapping("/{id}")
     public String excluir(@PathVariable Long id, RedirectAttributes ra) {
         service.excluirLivro(id);
-        ra.addFlashAttribute("msg", "Cliente excluído!");
+        ra.addFlashAttribute("msg", "Livro excluído!");
         return "redirect:/Livros";
     }
 }
