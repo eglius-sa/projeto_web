@@ -1,53 +1,174 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
-<head><meta charset="UTF-8"><title>Livros - Formulário</title></head>
+<head>
+    <meta charset="UTF-8">
+    <title>Livros - Formulário</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+</head>
 <body>
-<h1 th:text="${livro.id} != null ? 'Editar Livro' : 'Novo Livro'"></h1>
-<!-- Formulário Novo Cliente (Parte 2) -->
-<!-- Formulário Editar Cliente (Parte 3) -->
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/Livros">Projeto Web</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/Livros/novo">Novo Livro</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                </li>
+            </ul>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
 
+<div class="container mt-4">
+    <h1 th:text="${livro.id} != null ? 'Editar Livro' : 'Novo Livro'"></h1>
+    <!-- Formulário Novo Cliente (Parte 2) -->
+    <!-- Formulário Editar Cliente (Parte 3) -->
 
-<form th:if="${livro.id == null}" th:action="@{/templates/Livros}"
-      method="post" th:object="${livro}">
-    <label for="isbn">ISBN:</label>
-    <input th:field="*{isbn}" type="text" required><br>
-    <label for="titulo">Titulo:</label>
-    <input th:field="*{titulo}"  type="text" required><br>
-    <label for="autor">Autor:</label>]
-    <input th:field="*{autor}"  type="text" required><br>
-    <label for="edicao">Edicao:</label>
-    <input th:field="*{edicao}" id="edicao" type="number"><br>
-    <label for="ano">Ano:</label>
-    <input th:field="*{ano}" id="ano" type="number"><br>
-    <label for="exemplar">Exemplar:</label>
-    <input th:field="*{exemplar}" id="exemplar" type="number"><br>
+    <form th:if="${livro.id == null}" th:action="@{/Livros}"
+          method="post" th:object="${livro}">
+        <div class="row mb-3">
+            <label for="isbn" class="col-sm-2 col-form-label">ISBN</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="isbn" th:field="*{isbn}" required>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="titulo" class="col-sm-2 col-form-label">Título</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="titulo" th:field="*{titulo}" required>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="autor" class="col-sm-2 col-form-label">Autor</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="autor" th:field="*{autor}" required>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="edicao" class="col-sm-2 col-form-label">Edição</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" id="edicao" th:field="*{edicao}" required>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="ano" class="col-sm-2 col-form-label">Ano</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" id="ano" th:field="*{ano}" required>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="exemplar" class="col-sm-2 col-form-label">Exemplar</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" id="exemplar" th:field="*{exemplar}" required>
+            </div>
+        </div>
 
-    <!-- Erros por campo (mensagens do Bean Validation) -->
-    <div th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></div>
-    <div th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"></div>
-    <div th:if="${#fields.hasErrors('autor')}" th:errors="*{autor}"></div>
-    <button type="submit">Cadastrar</button>
-    <a th:href="@{/templates/Livros}">Cancelar</a>
-</form>
-<form th:if="${livro.id} != null"
-      th:action="@{/Livros/{id}(id=${livro.id})}" method="post"
-      th:object="${livro}">
-    <input type="hidden" th:field="*{id}" />
+        <div th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}" class="text-danger"></div>
+        <div th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}" class="text-danger"></div>
+        <div th:if="${#fields.hasErrors('autor')}" th:errors="*{autor}" class="text-danger"></div>
+        <button type="submit" class="btn btn-primary">Cadastrar</button>
+        <a th:href="@{/Livros}" class="btn btn-secondary"> Cancelar </a>
+    </form>
 
-    <input type="hidden" name="_method" value="put"/>
-    <label for="isbn">ISBN:</label>
-    <input th:field="*{isbn}" id="isbn" type="text" required><br>
-    <label for="titulo">Titulo:</label>
-    <input th:field="*{titulo}" id="titulo" type="text" required><br>
-    <label for="autor">Autor:</label>
-    <input th:field="*{autor}" id="autor" type="text"><br>
+    <form th:if="${livro.id} != null"
+          th:action="@{/Livros/{id}(id=${livro.id})}" method="post"
+          th:object="${livro}">
+        <input type="hidden" th:field="*{id}" />
 
-    <!-- Erros por campo (mensagens do Bean Validation) -->
-    <div th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></div>
-    <div th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"></div>
-    <div th:if="${#fields.hasErrors('autor')}" th:errors="*{autor}"></div>
-    <button type="submit">Atualizar</button>
-    <a th:href="@{/templates/Livros}">Cancelar</a>
-</form>
+        <input type="hidden" name="_method" value="put"/>
+        <div class="row mb-3">
+            <label for="isbn" class="col-sm-2 col-form-label">ISBN</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" th:field="*{isbn}" required>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="titulo" class="col-sm-2 col-form-label">Título</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" th:field="*{titulo}" required>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="autor" class="col-sm-2 col-form-label">Autor</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" th:field="*{autor}" required>
+            </div>
+        </div>
+        <div th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}" class="text-danger"></div>
+        <div th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}" class="text-danger"></div>
+        <div th:if="${#fields.hasErrors('autor')}" th:errors="*{autor}" class="text-danger"></div>
+        <button type="submit" class="btn btn-primary">Atualizar</button>
+        <a th:href="@{/Livros}" class="btn btn-secondary"> Cancelar </a>
+    </form>
+</div>
+<!--<form th:if="${livro.id == null}" th:action="@{/Livros}"-->
+<!--      method="post" th:object="${livro}">-->
+<!--    <label for="isbn">ISBN:</label>-->
+<!--    <input th:field="*{isbn}" type="text" required><br>-->
+<!--    <label for="titulo">Titulo:</label>-->
+<!--    <input th:field="*{titulo}"  type="text" required><br>-->
+<!--    <label for="autor">Autor:</label>]-->
+<!--    <input th:field="*{autor}"  type="text" required><br>-->
+<!--    <label for="edicao">Edicao:</label>-->
+<!--    <input th:field="*{edicao}" id="edicao" type="number"><br>-->
+<!--    <label for="ano">Ano:</label>-->
+<!--    <input th:field="*{ano}" id="ano" type="number"><br>-->
+<!--    <label for="exemplar">Exemplar:</label>-->
+<!--    <input th:field="*{exemplar}" id="exemplar" type="number"><br>-->
+
+<!--    &lt;!&ndash; Erros por campo (mensagens do Bean Validation) &ndash;&gt;-->
+<!--    <div th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></div>-->
+<!--    <div th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"></div>-->
+<!--    <div th:if="${#fields.hasErrors('autor')}" th:errors="*{autor}"></div>-->
+<!--    <button type="submit">Cadastrar</button>-->
+<!--    <a th:href="@{/templates/Livros}">Cancelar</a>-->
+<!--</form>-->
+<!--<form th:if="${livro.id} != null"-->
+<!--      th:action="@{/Livros/{id}(id=${livro.id})}" method="post"-->
+<!--      th:object="${livro}">-->
+<!--    <input type="hidden" th:field="*{id}" />-->
+
+<!--    <input type="hidden" name="_method" value="put"/>-->
+<!--    <label for="isbn">ISBN:</label>-->
+<!--    <input th:field="*{isbn}" id="isbn" type="text" required><br>-->
+<!--    <label for="titulo">Titulo:</label>-->
+<!--    <input th:field="*{titulo}" id="titulo" type="text" required><br>-->
+<!--    <label for="autor">Autor:</label>-->
+<!--    <input th:field="*{autor}" id="autor" type="text"><br>-->
+
+<!--    &lt;!&ndash; Erros por campo (mensagens do Bean Validation) &ndash;&gt;-->
+<!--    <div th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></div>-->
+<!--    <div th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"></div>-->
+<!--    <div th:if="${#fields.hasErrors('autor')}" th:errors="*{autor}"></div>-->
+<!--    <button type="submit">Atualizar</button>-->
+<!--    <a th:href="@{/templates/Livros}">Cancelar</a>-->
+<!--</form>-->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
