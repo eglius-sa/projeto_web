@@ -4,7 +4,13 @@ import br.uel.projetoweb.Model.Livro;
 import br.uel.projetoweb.Repository.LivroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 @Service
@@ -17,7 +23,27 @@ public class LivroService {
         return livroRepository.findAll();
     }
 
-    public Livro cadastrarLivro(Livro livro){
+    public Livro cadastrarLivro(Livro livro, MultipartFile imagem){
+        if(!imagem.isEmpty()){
+
+            String nomeArquivo = imagem.getOriginalFilename();
+            Path pasta = Paths.get("uploads/images");
+
+            try {
+                Files.createDirectories(pasta);
+                Path caminho = pasta.resolve(nomeArquivo);
+
+                Files.copy(
+                        imagem.getInputStream(),
+                        caminho,
+                        StandardCopyOption.REPLACE_EXISTING
+                );;
+
+                livro.setImagem(nomeArquivo);
+            } catch (IOException e) {
+                throw new RuntimeException("Erro ao adicionar imagem",e);
+            }
+        }
         return livroRepository.save(livro);
     }
 

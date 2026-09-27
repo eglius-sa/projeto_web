@@ -35,6 +35,9 @@ public class Livro {
     private String autor;
 
     @Column
+    private String imagem;
+
+    @Column
     private Integer edicao;
 
     @Column

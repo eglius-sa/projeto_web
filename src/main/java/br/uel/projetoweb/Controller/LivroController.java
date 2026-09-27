@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 //import java.util.List;
@@ -49,11 +50,12 @@ public class LivroController {
 
     @PostMapping
     public String cadastrar(@Valid @ModelAttribute Livro livro,
-                            BindingResult erros, RedirectAttributes ra) {
+                            BindingResult erros, RedirectAttributes ra,
+                            @RequestParam("arquivo") MultipartFile imagem) {
         if (erros.hasErrors()) {
             return "Livros/form";
         }
-        service.cadastrarLivro(livro);
+        service.cadastrarLivro(livro, imagem);
         ra.addFlashAttribute("msg", "Livro cadastrado!");
         return "redirect:/Livros";
     }

@@ -50,7 +50,8 @@
     <!-- Formulário Editar Cliente (Parte 3) -->
 
     <form th:if="${livro.id == null}" th:action="@{/Livros}"
-          method="post" th:object="${livro}">
+          method="post" th:object="${livro}"
+          enctype="multipart/form-data">
         <div class="row mb-3">
             <label for="isbn" class="col-sm-2 col-form-label">ISBN</label>
             <div class="col-sm-10">
@@ -86,6 +87,11 @@
             <div class="col-sm-10">
                 <input type="number" class="form-control" id="exemplar" th:field="*{exemplar}" required>
             </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="arquivo" class="form-label">Imagem da Capa</label>
+            <input class="form-control" type="file" id="arquivo" name="arquivo" accept="image/*"/>
         </div>
 
         <div th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}" class="text-danger"></div>

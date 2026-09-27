@@ -54,11 +54,11 @@
 
     <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
 
-        <div col class="col" th:each="livro : ${livros}">
+        <div class="col" th:each="livro : ${livros}">
 
             <div class="card h-100 shadow-sm">
 
-                <img th:src="@{/images/Image_PlaceHolder.jpg}"
+                <img th:src="@{'/images/' + ${livro.imagem}}"
                      class="card-img-top"
                      style="height: 300px; object-fit: cover;"
                      alt="Capa do livro">
