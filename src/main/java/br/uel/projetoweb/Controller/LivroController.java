@@ -37,8 +37,12 @@ public class LivroController {
     }
 
     @GetMapping
-    public String listar(Model model) {
-        model.addAttribute("livros", service.listarLivros());
+    public String listar(@RequestParam(defaultValue = "titulo") String atributo,
+                         @RequestParam(defaultValue = "asc") String ordem,
+                         Model model) {
+        model.addAttribute("livros", service.listarLivros(atributo, ordem));
+        model.addAttribute("ordem", ordem);
+        model.addAttribute("atributo", atributo);
         return "Livros/lista";
     }
 

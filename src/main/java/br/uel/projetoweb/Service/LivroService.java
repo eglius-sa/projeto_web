@@ -3,6 +3,7 @@ package br.uel.projetoweb.Service;
 import br.uel.projetoweb.Model.Livro;
 import br.uel.projetoweb.Repository.LivroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,8 +20,10 @@ public class LivroService {
     @Autowired
     private LivroRepository livroRepository;
 
-    public List<Livro> listarLivros(){
-        return livroRepository.findAll();
+    public List<Livro> listarLivros(String atributo, String ordem){
+        Sort.Direction direction = ordem.equals("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
+
+        return livroRepository.findAll(Sort.by(direction, atributo));
     }
 
     public Livro cadastrarLivro(Livro livro, MultipartFile imagem){

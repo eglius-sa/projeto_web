@@ -48,7 +48,45 @@
 <p th:if="${msg}" th:text="${msg}"></p>
 <!-- Tabela (Parte 2) -->
 
+
 <div class="container mt-4">
+
+    <div class="d-flex justify-content-end mb-3">
+
+        <div class="dropdown">
+
+            <button class="btn btn-outline-secondary dropdown-toggle"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                ↕ Ordenar
+            </button>
+
+            <div class="dropdown-menu dropdown-menu-end p-2"
+                 style="width: 400px;">
+                <form th:action="@{/Livros}" method="get" class="d-flex gap-2">
+
+                    <select name="atributo" class="form-select">
+                        <option value="titulo">Título</option>
+                        <option value="autor">Autor</option>
+                        <option value="ano">Ano</option>
+                        <option value="isbn">ISBN</option>
+                    </select>
+
+                    <select name="ordem" class="form-select">
+                        <option value="asc">Crescente ↑</option>
+                        <option value="desc">Decrescente ↓</option>
+                    </select>
+
+                    <button type="submit" class="btn btn-primary">
+                        Ordenar
+                    </button>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
 
     <h1 class="mb-4">Livros</h1>
 
