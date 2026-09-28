@@ -1,8 +1,24 @@
-h1 {
-    color: red;
-    text-align: center;
+body {
+    background-color: #e9ecef;
 }
-p {
-    font-size: 18px;
-    color: navy;
+
+.form-container {
+    max-width: 750px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.titulo-form {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: #212529;
+}
+.campo-label {
+    font-weight: 600;
+    color: #495057;
 }
