@@ -58,7 +58,7 @@ public class LivroController {
     @PostMapping
     public String cadastrar(@Valid @ModelAttribute Livro livro,
                             BindingResult erros, RedirectAttributes ra,
-                            @RequestParam("arquivo") MultipartFile imagem) {
+                            @RequestParam(value = "arquivo", required = false) MultipartFile imagem) {
         if (erros.hasErrors()) {
             return "Livros/form";
         }
@@ -76,11 +76,12 @@ public class LivroController {
     @PutMapping("/{id}")
     public String atualizar(@PathVariable Long id, @Valid
                             @ModelAttribute Livro livro, BindingResult erros,
-                            RedirectAttributes ra) {
+                            RedirectAttributes ra,
+                            @RequestParam(value = "arquivoAtualizado", required = false) MultipartFile imagem) {
         if (erros.hasErrors()) {
             return "Livros/form";
         }
-        service.atualizarLivro(id, livro);
+        service.atualizarLivro(id, livro, imagem);
         ra.addFlashAttribute("msgSucesso", "Livro atualizado!");
         return "redirect:/Livros";
     }

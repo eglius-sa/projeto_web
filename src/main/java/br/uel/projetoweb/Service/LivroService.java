@@ -44,7 +44,7 @@ public class LivroService {
     }
 
     public Livro cadastrarLivro(Livro livro, MultipartFile imagem){
-        if(!imagem.isEmpty()){
+        if(imagem !=null && !imagem.isEmpty()){
 
             String nomeArquivo = imagem.getOriginalFilename();
             Path pasta = Paths.get("uploads/images");
@@ -71,7 +71,7 @@ public class LivroService {
         return livroRepository.findById(id).orElse(null);
     }
 
-    public Livro atualizarLivro(Long id, Livro livroAtualizado){
+    public Livro atualizarLivro(Long id, Livro livroAtualizado, MultipartFile imagem){
         Livro livro = buscarLivroPorId(id);
 
         if (livro !=  null){
@@ -81,6 +81,27 @@ public class LivroService {
             livro.setEdicao(livroAtualizado.getEdicao());
             livro.setAno(livroAtualizado.getAno());
             livro.setExemplar(livroAtualizado.getExemplar());
+
+            if(imagem !=null && !imagem.isEmpty()){
+
+                String nomeArquivo = imagem.getOriginalFilename();
+                Path pasta = Paths.get("uploads/images");
+
+                try {
+                    Files.createDirectories(pasta);
+                    Path caminho = pasta.resolve(nomeArquivo);
+
+                    Files.copy(
+                            imagem.getInputStream(),
+                            caminho,
+                            StandardCopyOption.REPLACE_EXISTING
+                    );
+
+                    livro.setImagem(nomeArquivo);
+                } catch (IOException e) {
+                    throw new RuntimeException("Erro ao adicionar imagem",e);
+                }
+            }
             return livroRepository.save(livro);
         } else{
             throw new RuntimeException("Livro não encontrado por id: " + id);

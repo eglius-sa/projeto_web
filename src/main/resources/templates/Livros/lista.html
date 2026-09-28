@@ -128,7 +128,9 @@
 
             <div class="card h-100 shadow-sm">
 
-                <img th:src="@{'/images/' + ${livro.imagem}}"
+                <img th:src="${livro.imagem != null and !livro.imagem.isEmpty() ?
+                 '/images/' + livro.imagem :
+                 '/images/sem_capa.jpg'}"
                      class="card-img-top"
                      style="height: 300px; object-fit: cover;"
                      alt="Capa do livro">

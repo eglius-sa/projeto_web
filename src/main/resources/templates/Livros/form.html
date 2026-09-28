@@ -91,7 +91,8 @@
 
     <form th:if="${livro.id} != null"
           th:action="@{/Livros/{id}(id=${livro.id})}" method="post"
-          th:object="${livro}">
+          th:object="${livro}"
+          enctype="multipart/form-data">
         <input type="hidden" th:field="*{id}" />
 
         <input type="hidden" name="_method" value="put"/>
@@ -135,8 +136,8 @@
             </div>
         </div>
         <div class="mb-3">
-            <label for="arquivo" class="form-label">Imagem da Capa</label>
-            <input class="form-control" type="file" name="arquivo" accept="image/*"/>
+            <label for="arquivoAtualizado" class="form-label">Imagem da Capa</label>
+            <input class="form-control" type="file" id="arquivoAtualizado" name="arquivoAtualizado" accept="image/*"/>
         </div>
         <div th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}" class="text-danger"></div>
         <div th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}" class="text-danger"></div>
