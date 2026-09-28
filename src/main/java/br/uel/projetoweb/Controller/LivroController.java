@@ -21,7 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
+import org.springframework.ui.Model;
 //import java.util.List;
 
 @Controller
@@ -62,9 +62,15 @@ public class LivroController {
         if (erros.hasErrors()) {
             return "Livros/form";
         }
-        service.cadastrarLivro(livro, imagem);
-        ra.addFlashAttribute("msgSucesso", "Livro cadastrado!");
-        return "redirect:/Livros";
+        try{
+            service.cadastrarLivro(livro, imagem);
+            ra.addFlashAttribute("msgSucesso", "Livro cadastrado!");
+            return "redirect:/Livros";
+        } catch (IllegalArgumentException e) {
+            ra.addFlashAttribute("msgErro", e.getMessage());
+            return "redirect:/Livros/novo";
+        }
+
     }
 
     @GetMapping("/editar/{id}")
@@ -81,9 +87,15 @@ public class LivroController {
         if (erros.hasErrors()) {
             return "Livros/form";
         }
-        service.atualizarLivro(id, livro, imagem);
-        ra.addFlashAttribute("msgSucesso", "Livro atualizado!");
-        return "redirect:/Livros";
+        try{
+            service.atualizarLivro(id, livro, imagem);
+            ra.addFlashAttribute("msgSucesso", "Livro atualizado!");
+            return "redirect:/Livros";
+        }catch (IllegalArgumentException e) {
+            ra.addFlashAttribute("msgErro", e.getMessage());
+            return "redirect:/Livros/editar/" + id;
+        }
+
     }
 
     @DeleteMapping("/{id}")

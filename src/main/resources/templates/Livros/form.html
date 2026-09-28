@@ -19,13 +19,33 @@
                     <a class="nav-link active" aria-current="page" href="/Livros/novo">Novo Livro</a>
                 </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-                <button class="btn btn-outline-success" type="submit">Search</button>
+            <form th:action="@{/Livros}" method="get" class="d-flex gap-2 mb-3" style="max-width: 600px;">
+                <select name="buscarPor" class="form-select" style="max-width: 100px; height: 38px">
+                    <option value="titulo" th:selected="${buscarPor == 'titulo'}">Título</option>
+                    <option value="autor" th:selected="${buscarPor == 'autor'}">Autor</option>
+                </select>
+                <input type="search" name="termo" style="max-width: 400px; height: 38px" class="form-control" placeholder="Digite para buscar..."
+                       th:value="${termo}" aria-label="Buscar livro" />
+                <button type="submit" style="height: 38px" class="btn btn-outline-primary">
+                    🔍
+                </button>
+                <a th:if="${termo != null && !termo.isEmpty()}" th:href="@{/Livros}" class="btn btn-outline-danger">
+                    Limpar
+                </a>
             </form>
         </div>
     </div>
 </nav>
+
+<div th:if="${msgErro}" class="alert alert-danger alert-dismissible fade show" role="alert">
+    <span th:text="${msgErro}"></span>
+
+    <button type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Fechar">
+    </button>
+</div>
 
 <div class="container mt-4">
     <h1 th:text="${livro.id} != null ? 'Editar Livro' : 'Novo Livro'"></h1>
@@ -45,7 +65,8 @@
         <div class="row mb-3">
             <label for="titulo" class="col-sm-2 col-form-label">Título</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="titulo" th:field="*{titulo}" required>
+                <input type="text" class="form-control" id="titulo" th:field="*{titulo}" th:errorclass="is-invalid" required>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"></div>
             </div>
         </div>
         <div class="row mb-3">
@@ -82,9 +103,6 @@
             <input class="form-control" type="file" id="arquivo" name="arquivo" accept="image/*"/>
         </div>
 
-        <div th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}" class="text-danger"></div>
-        <div th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}" class="text-danger"></div>
-        <div th:if="${#fields.hasErrors('autor')}" th:errors="*{autor}" class="text-danger"></div>
         <button type="submit" class="btn btn-primary">Cadastrar</button>
         <a th:href="@{/Livros}" class="btn btn-secondary"> Cancelar </a>
     </form>
@@ -99,19 +117,22 @@
         <div class="row mb-3">
             <label for="isbn" class="col-sm-2 col-form-label">ISBN</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" th:field="*{isbn}" required>
+                <input type="text" class="form-control" th:field="*{isbn}" th:errorclass="is-invalid" required>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></div>
             </div>
         </div>
         <div class="row mb-3">
             <label for="titulo" class="col-sm-2 col-form-label">Título</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" th:field="*{titulo}" required>
+                <input type="text" class="form-control" th:field="*{titulo}" th:errorclass="is-invalid" required>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"></div>
             </div>
         </div>
         <div class="row mb-3">
             <label for="autor" class="col-sm-2 col-form-label">Autor</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" th:field="*{autor}" required>
+                <input type="text" class="form-control" th:field="*{autor}" th:errorclass="is-invalid" required>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('autor')}" th:errors="*{autor}"></div>
             </div>
         </div>
         <div class="row mb-3">
@@ -139,55 +160,10 @@
             <label for="arquivoAtualizado" class="form-label">Imagem da Capa</label>
             <input class="form-control" type="file" id="arquivoAtualizado" name="arquivoAtualizado" accept="image/*"/>
         </div>
-        <div th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}" class="text-danger"></div>
-        <div th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}" class="text-danger"></div>
-        <div th:if="${#fields.hasErrors('autor')}" th:errors="*{autor}" class="text-danger"></div>
         <button type="submit" class="btn btn-primary">Atualizar</button>
         <a th:href="@{/Livros}" class="btn btn-secondary"> Cancelar </a>
     </form>
 </div>
-<!--<form th:if="${livro.id == null}" th:action="@{/Livros}"-->
-<!--      method="post" th:object="${livro}">-->
-<!--    <label for="isbn">ISBN:</label>-->
-<!--    <input th:field="*{isbn}" type="text" required><br>-->
-<!--    <label for="titulo">Titulo:</label>-->
-<!--    <input th:field="*{titulo}"  type="text" required><br>-->
-<!--    <label for="autor">Autor:</label>]-->
-<!--    <input th:field="*{autor}"  type="text" required><br>-->
-<!--    <label for="edicao">Edicao:</label>-->
-<!--    <input th:field="*{edicao}" id="edicao" type="number"><br>-->
-<!--    <label for="ano">Ano:</label>-->
-<!--    <input th:field="*{ano}" id="ano" type="number"><br>-->
-<!--    <label for="exemplar">Exemplar:</label>-->
-<!--    <input th:field="*{exemplar}" id="exemplar" type="number"><br>-->
-
-<!--    &lt;!&ndash; Erros por campo (mensagens do Bean Validation) &ndash;&gt;-->
-<!--    <div th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></div>-->
-<!--    <div th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"></div>-->
-<!--    <div th:if="${#fields.hasErrors('autor')}" th:errors="*{autor}"></div>-->
-<!--    <button type="submit">Cadastrar</button>-->
-<!--    <a th:href="@{/templates/Livros}">Cancelar</a>-->
-<!--</form>-->
-<!--<form th:if="${livro.id} != null"-->
-<!--      th:action="@{/Livros/{id}(id=${livro.id})}" method="post"-->
-<!--      th:object="${livro}">-->
-<!--    <input type="hidden" th:field="*{id}" />-->
-
-<!--    <input type="hidden" name="_method" value="put"/>-->
-<!--    <label for="isbn">ISBN:</label>-->
-<!--    <input th:field="*{isbn}" id="isbn" type="text" required><br>-->
-<!--    <label for="titulo">Titulo:</label>-->
-<!--    <input th:field="*{titulo}" id="titulo" type="text" required><br>-->
-<!--    <label for="autor">Autor:</label>-->
-<!--    <input th:field="*{autor}" id="autor" type="text"><br>-->
-
-<!--    &lt;!&ndash; Erros por campo (mensagens do Bean Validation) &ndash;&gt;-->
-<!--    <div th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></div>-->
-<!--    <div th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"></div>-->
-<!--    <div th:if="${#fields.hasErrors('autor')}" th:errors="*{autor}"></div>-->
-<!--    <button type="submit">Atualizar</button>-->
-<!--    <a th:href="@{/templates/Livros}">Cancelar</a>-->
-<!--</form>-->
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>

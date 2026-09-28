@@ -64,6 +64,9 @@ public class LivroService {
                 throw new RuntimeException("Erro ao adicionar imagem",e);
             }
         }
+        if(livroRepository.existsByIsbn(livro.getIsbn())){
+            throw new IllegalArgumentException("ISBN já cadastrado");
+        }
         return livroRepository.save(livro);
     }
 
@@ -73,6 +76,10 @@ public class LivroService {
 
     public Livro atualizarLivro(Long id, Livro livroAtualizado, MultipartFile imagem){
         Livro livro = buscarLivroPorId(id);
+
+        if(livroRepository.existsByIsbnAndIdNot(livroAtualizado.getIsbn(),id)){
+            throw new IllegalArgumentException("ISBN já cadastrado");
+        }
 
         if (livro !=  null){
             livro.setTitulo(livroAtualizado.getTitulo());
