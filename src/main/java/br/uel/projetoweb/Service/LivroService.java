@@ -3,6 +3,8 @@ package br.uel.projetoweb.Service;
 import br.uel.projetoweb.Model.Livro;
 import br.uel.projetoweb.Repository.LivroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,10 +22,21 @@ public class LivroService {
     @Autowired
     private LivroRepository livroRepository;
 
-    public List<Livro> listarLivros(String atributo, String ordem){
-        Sort.Direction direction = ordem.equals("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
+    public List<Livro> listarLivros(String atributo, String ordem, String buscarPor, String termo) {
+        Sort sort = ordem.equalsIgnoreCase("desc") ? Sort.by(atributo).descending() : Sort.by(atributo).ascending();
+        if (termo == null || termo.trim().isEmpty()) {
+            return livroRepository.findAll(sort);
 
-        return livroRepository.findAll(Sort.by(direction, atributo));
+        }
+            Livro livroFiltro = new Livro();
+            ExampleMatcher matcher = ExampleMatcher.matching()
+                    .withIgnoreCase()
+                    .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+            switch (buscarPor) {
+                case "titulo" -> livroFiltro.setTitulo(termo.trim());
+                case "autor" -> livroFiltro.setAutor(termo.trim());
+            }
+            return livroRepository.findAll(Example.of(livroFiltro, matcher), sort);
     }
 
     public Livro cadastrarLivro(Livro livro, MultipartFile imagem){
@@ -40,7 +53,7 @@ public class LivroService {
                         imagem.getInputStream(),
                         caminho,
                         StandardCopyOption.REPLACE_EXISTING
-                );;
+                );
 
                 livro.setImagem(nomeArquivo);
             } catch (IOException e) {

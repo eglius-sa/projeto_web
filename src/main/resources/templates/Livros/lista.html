@@ -97,6 +97,24 @@
         </div>
     </div>
 
+    <div class="container mt-4">
+        <form th:action="@{/Livros}" method="get" class="d-flex gap-2 mb-3" style="max-width: 600px;">
+            <select name="buscarPor" class="form-select" style="max-width: 150px;">
+                <option value="titulo" th:selected="${buscarPor == 'titulo'}">Título</option>
+                <option value="autor" th:selected="${buscarPor == 'autor'}">Autor</option>
+            </select>
+            <input type="search" name="termo" class="form-control" placeholder="Digite para buscar..."
+                   th:value="${termo}" aria-label="Buscar livro" />
+            <button type="submit" class="btn btn-outline-primary">
+                🔍 Buscar
+            </button>
+            <a th:if="${termo != null && !termo.isEmpty()}" th:href="@{/Livros}" class="btn btn-outline-danger">
+                Limpar
+            </a>
+        </form>
+
+    </div>
+
     <h1 class="mb-4">Livros</h1>
 
     <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">

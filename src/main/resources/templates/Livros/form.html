@@ -38,7 +38,8 @@
         <div class="row mb-3">
             <label for="isbn" class="col-sm-2 col-form-label">ISBN</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="isbn" th:field="*{isbn}" required>
+                <input type="text" class="form-control" id="isbn" th:field="*{isbn}" th:errorclass="is-invalid" required>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></div>
             </div>
         </div>
         <div class="row mb-3">
@@ -50,28 +51,32 @@
         <div class="row mb-3">
             <label for="autor" class="col-sm-2 col-form-label">Autor</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="autor" th:field="*{autor}" required>
+                <input type="text" class="form-control" id="autor" th:field="*{autor}" th:errorclass="is-invalid" required>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('autor')}" th:errors="*{autor}"></div>
             </div>
         </div>
         <div class="row mb-3">
             <label for="edicao" class="col-sm-2 col-form-label">Edição</label>
             <div class="col-sm-10">
-                <input type="number" class="form-control" id="edicao" th:field="*{edicao}" required>
+                <input type="number" class="form-control" id="edicao" th:field="*{edicao}" th:errorclass="is-invalid" required>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('edicao')}" th:errors="*{edicao}"></div>
             </div>
         </div>
         <div class="row mb-3">
             <label for="ano" class="col-sm-2 col-form-label">Ano</label>
             <div class="col-sm-10">
-                <input type="number" class="form-control" id="ano" th:field="*{ano}" required>
-            </div>
-        </div>
-        <div class="row mb-3">
-            <label for="exemplar" class="col-sm-2 col-form-label">Exemplar</label>
-            <div class="col-sm-10">
-                <input type="number" class="form-control" id="exemplar" th:field="*{exemplar}" required>
+                <input type="number" class="form-control" id="ano" th:field="*{ano}" th:errorclass="is-invalid" required>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('ano')}" th:errors="*{ano}"></div>
             </div>
         </div>
 
+        <div class="row mb-3">
+            <label for="exemplar" class="col-sm-2 col-form-label">Exemplar</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" id="exemplar"th:field="*{exemplar}" th:errorclass="is-invalid" required>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('exemplar')}" th:errors="*{exemplar}"></div>
+            </div>
+        </div>
         <div class="mb-3">
             <label for="arquivo" class="form-label">Imagem da Capa</label>
             <input class="form-control" type="file" id="arquivo" name="arquivo" accept="image/*"/>
@@ -107,6 +112,31 @@
             <div class="col-sm-10">
                 <input type="text" class="form-control" th:field="*{autor}" required>
             </div>
+        </div>
+        <div class="row mb-3">
+            <label for="edicao" class="col-sm-2 col-form-label">Edição</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" th:field="*{edicao}" th:errorclass="is-invalid" required>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('edicao')}" th:errors="*{edicao}"></div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="ano" class="col-sm-2 col-form-label">Ano</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" th:field="*{ano}" th:errorclass="is-invalid" required>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('ano')}" th:errors="*{ano}"></div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="exemplar" class="col-sm-2 col-form-label">Exemplar</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" th:field="*{exemplar}" th:errorclass="is-invalid" required>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('exemplar')}" th:errors="*{exemplar}"></div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="arquivo" class="form-label">Imagem da Capa</label>
+            <input class="form-control" type="file" name="arquivo" accept="image/*"/>
         </div>
         <div th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}" class="text-danger"></div>
         <div th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}" class="text-danger"></div>
