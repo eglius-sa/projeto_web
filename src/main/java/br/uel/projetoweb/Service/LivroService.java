@@ -26,17 +26,21 @@ public class LivroService {
         Sort sort = ordem.equalsIgnoreCase("desc") ? Sort.by(atributo).descending() : Sort.by(atributo).ascending();
         if (termo == null || termo.trim().isEmpty()) {
             return livroRepository.findAll(sort);
-
         }
-            Livro livroFiltro = new Livro();
-            ExampleMatcher matcher = ExampleMatcher.matching()
-                    .withIgnoreCase()
-                    .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
-            switch (buscarPor) {
-                case "titulo" -> livroFiltro.setTitulo(termo.trim());
-                case "autor" -> livroFiltro.setAutor(termo.trim());
-            }
-            return livroRepository.findAll(Example.of(livroFiltro, matcher), sort);
+        Livro livroFiltro = new Livro();
+        ExampleMatcher matcher = ExampleMatcher.matching()
+                .withIgnoreCase()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING)
+                .withIgnoreNullValues();
+        matcher = matcher.withIgnorePaths("id", "ano", "edicao", "exemplar");
+
+        switch (buscarPor) {
+            case "titulo" -> livroFiltro.setTitulo(termo.trim());
+            case "autor" -> livroFiltro.setAutor(termo.trim());
+            default -> livroFiltro.setTitulo(termo.trim()); // Fallback caso venha algo inesperado
+        }
+
+        return livroRepository.findAll(Example.of(livroFiltro, matcher), sort);
     }
 
     public Livro cadastrarLivro(Livro livro, MultipartFile imagem){
@@ -85,7 +89,7 @@ public class LivroService {
 
     public void excluirLivro(Long id) {
         if (!livroRepository.existsById(id)) {
-            throw new RuntimeException("Cliente não encontrado com id: " + id);
+            throw new RuntimeException("Livro não encontrado com id: " + id);
         }
         livroRepository.deleteById(id);
     }

@@ -10,7 +10,6 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
 //import java.util.List;
 //package br.uel.Livro.Controller;
 //import br.uel.Livro.Service.LivroService;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 //import jakarta.validation.Valid;
 //import org.springframework.http.HttpStatus;
 //import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,14 +37,15 @@ public class LivroController {
     @GetMapping
     public String listar(@RequestParam(defaultValue = "titulo") String atributo,
                          @RequestParam(defaultValue = "asc") String ordem,
-                         @RequestParam(defaultValue = "") String buscarPor,
-                         @RequestParam(defaultValue = "") String termo,
+                         @RequestParam(defaultValue = "titulo") String buscarPor,                          @RequestParam(defaultValue = "") String termo,
                          Model model) {
+
         model.addAttribute("livros", service.listarLivros(atributo, ordem, buscarPor, termo));
         model.addAttribute("ordem", ordem);
         model.addAttribute("atributo", atributo);
         model.addAttribute("buscarPor", buscarPor);
         model.addAttribute("termo", termo);
+
         return "Livros/lista";
     }
 
