@@ -205,21 +205,31 @@
 
 
 <table>
-    <tr>
-        <th>ISBN</th> <th>titulo</th> <th>autor</th> <th>edicao</th> <th>ano</th> <th>exemplar</th>
+    <thead>
+        <tr>
+            <th class="px-4">ISBN</th>
+            <th class="px-4">Título</th>
+            <th class="px-4">Autor</th>
+            <th class="px-4 text-center">Edição</th>
+            <th class="px-4 text-center">Ano</th>
+            <th class="px-4 text-center">Exemplar</th>
+            <th class="px-4 text-center" colspan="2">Ações</th>
     </tr>
+    </thead>
     <tr th:each="c : ${livros}">
-        <td th:text="${c.isbn}"></td>
-        <td th:text="${c.titulo}"></td>
-        <td th:text="${c.autor}"></td>
-        <td th:text="${c.edicao}"></td>
-        <td th:text="${c.ano}"></td>
-        <td th:text="${c.exemplar}"></td>
+        <td class="px-4 text-center" th:text="${c.isbn}"></td>
+        <td class="px-4 text-center" th:text="${c.titulo}"></td>
+        <td class="px-4 text-center" th:text="${c.autor}"></td>
+        <td class="px-4 text-center" th:text="${c.edicao}"></td>
+        <td class="px-4 text-center" th:text="${c.ano}"></td>
+        <td class="px-4 text-center" th:text="${c.exemplar}"></td>
         <td>
             <form th:action="@{/Livros/editar/{id}(id=${c.id})}"
                   method="get">
                 <button type="submit">Editar</button>
             </form>
+        </td>
+        <td>
             <form th:action="@{/Livros/{id}(id=${c.id})}" method="post">
                 <input type="hidden" name="_method" value="delete"/>
                 <button type="submit">Excluir</button>
