@@ -19,9 +19,19 @@
                     <a class="nav-link active" aria-current="page" href="/Livros/novo">Novo Livro</a>
                 </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-                <button class="btn btn-outline-success" type="submit">Search</button>
+            <form th:action="@{/Livros}" method="get" class="d-flex gap-2 mb-3" style="max-width: 600px;">
+                <select name="buscarPor" class="form-select" style="max-width: 100px; height: 38px">
+                    <option value="titulo" th:selected="${buscarPor == 'titulo'}">Título</option>
+                    <option value="autor" th:selected="${buscarPor == 'autor'}">Autor</option>
+                </select>
+                <input type="search" name="termo" style="max-width: 400px; height: 38px" class="form-control" placeholder="Digite para buscar..."
+                       th:value="${termo}" aria-label="Buscar livro" />
+                <button type="submit" style="height: 38px" class="btn btn-outline-primary">
+                    🔍
+                </button>
+                <a th:if="${termo != null && !termo.isEmpty()}" th:href="@{/Livros}" class="btn btn-outline-danger">
+                    Limpar
+                </a>
             </form>
         </div>
     </div>
@@ -98,20 +108,6 @@
     </div>
 
     <div class="container mt-4">
-        <form th:action="@{/Livros}" method="get" class="d-flex gap-2 mb-3" style="max-width: 600px;">
-            <select name="buscarPor" class="form-select" style="max-width: 150px;">
-                <option value="titulo" th:selected="${buscarPor == 'titulo'}">Título</option>
-                <option value="autor" th:selected="${buscarPor == 'autor'}">Autor</option>
-            </select>
-            <input type="search" name="termo" class="form-control" placeholder="Digite para buscar..."
-                   th:value="${termo}" aria-label="Buscar livro" />
-            <button type="submit" class="btn btn-outline-primary">
-                🔍 Buscar
-            </button>
-            <a th:if="${termo != null && !termo.isEmpty()}" th:href="@{/Livros}" class="btn btn-outline-danger">
-                Limpar
-            </a>
-        </form>
 
         <div th:if="${#lists.isEmpty(livros)}" class="alert alert-warning text-center mt-4" role="alert">
             📢 Nenhum livro foi encontrado para os critérios informados.
@@ -120,7 +116,7 @@
 
     </div>
 
-    <h1 class="mb-4">Livros</h1>a
+    <h1 class="mb-4">Livros</h1>
 
     <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
 
